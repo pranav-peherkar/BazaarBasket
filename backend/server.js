@@ -1,10 +1,7 @@
 import './config/env.js';
 
-import cors from 'cors';
-
-console.log("MONGO_URL =", process.env.MONGO_URL);
-console.log("STRIPE_KEY =", process.env.STRIPE_SECRET_KEY);
 import express from 'express';
+import cors from 'cors';
 import { connectDB } from './config/db.js';
 
 import path from 'path';
@@ -17,40 +14,48 @@ import cartRouter from './routes/cartRoute.js';
 import orderrouter from './routes/orderRoute.js';
 
 const app = express();
+
+// ✅ IMPORTANT: Render PORT fix
 const port = process.env.PORT || 4000;
 
+// Fix __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware
-// MIDDLEWARE 
+// ✅ Better CORS (SAFE + flexible)
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      process.env.FRONTEND_URL   // ✅ USE THIS
+      process.env.FRONTEND_URL
     ],
     credentials: true,
   })
 );
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database Connection
-connectDB();
+// ✅ Connect DB (with log)
+connectDB()
+  .then(() => console.log("DB CONNECTED ✅"))
+  .catch(err => console.log("DB ERROR ❌", err));
 
 // Routes
-app.use("/api/user", userRouter)
+app.use("/api/user", userRouter);
 app.use('/api/cart', authMiddleware, cartRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api/items', itemrouter)
-app.use('/api/orders', orderrouter)
+app.use('/api/items', itemrouter);
+app.use('/api/orders', orderrouter);
 
+// Test route
 app.get('/', (req, res) => {
-    res.send('API Working');
+  res.send('API Working');
 });
 
+// ✅ IMPORTANT: listen properly
 app.listen(port, () => {
-    console.log(`Server Started on http://localhost:${port}`);
+  console.log(`Server Started on port ${port}`);
 });
