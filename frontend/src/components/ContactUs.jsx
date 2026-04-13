@@ -90,7 +90,7 @@ const ContactUs = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className={contactStyles.formInput}
-                  placeholder="John Doe"
+                  placeholder="Your Name"
                   required
                 />
               </div>
@@ -108,7 +108,7 @@ const ContactUs = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className={contactStyles.formInput}
-                  placeholder="john@example.com"
+                  placeholder="Your Email"
                   required
                 />
               </div>
