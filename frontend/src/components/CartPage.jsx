@@ -1,6 +1,7 @@
 // src/pages/Cart.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+const API = import.meta.env.VITE_API_URL;
 import { FiArrowLeft, FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
 import { useCart } from '../CartContext';
 import { cartStyles } from '../assets/dummyStyles';
@@ -18,7 +19,7 @@ const Cart = () => {
   const getItemName  = item => item.name  ?? item.product?.name  ?? 'Unnamed item';
   const getItemImage = item => {
     const path = item.image   ?? item.product?.imageUrl ?? '';
-    return path ? `http://localhost:4000${path}` : '';
+    return path ? `${API}${path}` : '';
   };
 
   // Compute subtotal

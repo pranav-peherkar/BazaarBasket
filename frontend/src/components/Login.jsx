@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import {
   FaArrowLeft,
   FaUser,
@@ -56,7 +57,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/login",
+        `${API}/api/user/login`,
         {
           email: formData.email,
           password: formData.password,

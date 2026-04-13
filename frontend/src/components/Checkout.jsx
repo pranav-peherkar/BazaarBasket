@@ -6,6 +6,8 @@ import { useCart } from '../CartContext';
 import { checkoutStyles } from '../assets/dummyStyles';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_API_URL;
+
 const CheckoutPage = () => {
   const { cart, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
@@ -69,7 +71,7 @@ const CheckoutPage = () => {
     try {
       const token = localStorage.getItem('authToken');
       const res = await axios.post(
-        'http://localhost:4000/api/orders',
+        `${API}/api/orders`,
         order,
         {
           headers: {
@@ -292,7 +294,7 @@ const CheckoutPage = () => {
                     <div className={checkoutStyles.cartImage}>
                       {item.imageUrl ? (
                         <img
-                          src={`http://localhost:4000${item.imageUrl}`}
+                          src={`${API}${item.imageUrl}`}
                           alt={item.name}
                           className="w-full h-full object-cover rounded"
                           onError={e => {

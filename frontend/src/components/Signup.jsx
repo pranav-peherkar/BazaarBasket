@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+const API = import.meta.env.VITE_API_URL;
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FaUser,
@@ -71,7 +72,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        'http://localhost:4000/api/user/register',
+        `${API}/api/user/register`,
         {
           name: formData.name,
           email: formData.email,

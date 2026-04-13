@@ -5,7 +5,7 @@ import {
 } from 'react-icons/fi';
 import { ordersPageStyles } from "../assets/dummyStyles.js";
 import axios from 'axios';
-
+const API = import.meta.env.VITE_API_URL;
 const UserOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -20,7 +20,7 @@ const UserOrdersPage = () => {
   const fetchAndFilterOrders = async () => {
     try {
       // 2) Fetch ALL orders publicly
-      const resp = await axios.get('http://localhost:4000/api/orders');
+      const resp = await axios.get(`${API}/api/orders`);
       const allOrders = resp.data;
 
       // 3) Client‑side filter by customer.email
@@ -240,12 +240,12 @@ const UserOrdersPage = () => {
                     <div className="border border-emerald-700 rounded-xl overflow-hidden">
                       {selectedOrder.items.map((item, index) => (
                         <div
-                          key={item._id || idx}
+                          key={item._id || index}
                           className={`flex items-center p-4 bg-emerald-900/30 ${index !== selectedOrder.items.length - 1 ? 'border-b border-emerald-700' : ''}`}
                         >
                           {item.imageUrl ? (
                             <img
-                              src={`http://localhost:4000${item.imageUrl}`}
+                              src={`${API}${item.imageUrl}`}
                               alt={item.name}
                               className="w-16 h-16 object-cover rounded-lg mr-4"
                             />

@@ -8,6 +8,8 @@ import { itemsHomeStyles } from "../assets/dummyStyles.js";
 
 import axios from 'axios'
 
+const API = import.meta.env.VITE_API_URL;
+
 const ItemsHome = () => {
   const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState(() =>
@@ -19,7 +21,7 @@ const ItemsHome = () => {
   }, [activeCategory]);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/items")
+    axios.get(`${API}/api/items`)
       .then(res => {
         const normalized = res.data.map(p => ({
           ...p,
@@ -200,7 +202,7 @@ const ItemsHome = () => {
                   >
                     <div className={itemsHomeStyles.imageContainer}>
                       <img
-                        src={`http://localhost:4000${product.imageUrl}`}
+                        src={`${API}${product.imageUrl}`}
                         alt={product.name}
                         className={itemsHomeStyles.productImage}
                         onError={(e) => {

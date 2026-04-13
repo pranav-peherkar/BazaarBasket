@@ -7,7 +7,7 @@ import { groceryData } from '../assets/dummyDataItem';
 import { itemsPageStyles } from '../assets/dummyStyles';
 
 // Backend base URL
-const BACKEND_URL = 'http://localhost:4000';
+const API = import.meta.env.VITE_API_URL;
 
 const ProductCard = ({ item }) => {
   const { addToCart, removeFromCart, updateQuantity, cart } = useCart();
@@ -28,8 +28,8 @@ const ProductCard = ({ item }) => {
   let imgSrc = item.image;
   if (rawImage) {
     if (rawImage.startsWith('http')) imgSrc = rawImage;
-    else if (rawImage.startsWith('/')) imgSrc = `${BACKEND_URL}${rawImage}`;
-    else imgSrc = `${BACKEND_URL}/uploads/${rawImage}`;
+    else if (rawImage.startsWith('/')) imgSrc = `${API}${rawImage}`;
+    else imgSrc = `${API}/uploads/${rawImage}`;
   }
 
   return (
@@ -90,7 +90,7 @@ const Items = () => {
   // Fetch from backend and override static data
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/api/items`)
+      .get(`${API}/api/items`)
       .then(res => {
         const products = Array.isArray(res.data)
           ? res.data
