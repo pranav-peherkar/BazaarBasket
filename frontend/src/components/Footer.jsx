@@ -55,7 +55,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h2 className={footerStyles.brandTitle}>
-              BAZAAR<span className={footerStyles.brandSpan}>BASKET</span>
+              <span className={footerStyles.brandSpan}>BASKET</span>
             </h2>
             <p className={footerStyles.brandText}>
               Bringing you the freshest organic produce since 2010. Our mission is to deliver farm-fresh goodness straight to your doorstep.
@@ -104,7 +104,7 @@ const Footer = () => {
                   <FaMapMarkerAlt className={footerStyles.contactIcon} />
                 </div>
                 <div>
-                  <p>123 Organic Valley, Green City, GC 54321</p>
+                  <p>123 Ambegaon, Pune, Pin 411046</p>
                 </div>
               </li>
               <li className={footerStyles.contactItem}>
@@ -112,7 +112,7 @@ const Footer = () => {
                   <FaPhone className={footerStyles.contactIcon} />
                 </div>
                 <div>
-                  <p>+01 0894561230</p>
+                  <p>+91 8149414471</p>
                 </div>
               </li>
               <li className={footerStyles.contactItem}>
@@ -120,7 +120,7 @@ const Footer = () => {
                   <FaEnvelope className={footerStyles.contactIcon} />
                 </div>
                 <div>
-                  <p>hexagonsservices@gmail.com</p>
+                  <p>bazaarbasketservices@gmail.com</p>
                 </div>
               </li>
             </ul>
@@ -182,7 +182,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className={footerStyles.attributionLink}
               >
-                Hexagon Digital Services
+                Pranav Peherkar
               </a>
             </span>
           </div>
