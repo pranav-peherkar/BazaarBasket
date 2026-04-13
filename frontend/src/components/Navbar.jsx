@@ -137,10 +137,10 @@ export default function Navbar() {
           <Link to="/" className={navbarStyles.logoLink}>
             <img
               src={logo}
-              alt="RushBasket Logo"
+              alt="BazaarBasket Logo"
               className={`${navbarStyles.logoImage} ${scrolled ? 'h-10 w-10' : 'h-12 w-12'}`}
             />
-            <span className={navbarStyles.logoText}>RushBasket</span>
+            <span className={navbarStyles.logoText}>BazaarBasket</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -252,10 +252,10 @@ export default function Navbar() {
               <div className={navbarStyles.mobileLogo}>
                 <img
                   src={logo}
-                  alt="RushBasket Logo"
+                  alt="BazaarBasket Logo"
                   className={navbarStyles.mobileLogoImage}
                 />
-                <span className={navbarStyles.mobileLogoText}>RushBasket</span>
+                <span className={navbarStyles.mobileLogoText}>BazaarBasket</span>
 
               </div>
 
