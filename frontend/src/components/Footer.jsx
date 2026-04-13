@@ -55,7 +55,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h2 className={footerStyles.brandTitle}>
-              <span className={footerStyles.brandSpan}>BASKET</span>
+              <span className={footerStyles.brandSpan}>BAZAARBASKET</span>
             </h2>
             <p className={footerStyles.brandText}>
               Bringing you the freshest organic produce since 2010. Our mission is to deliver farm-fresh goodness straight to your doorstep.
