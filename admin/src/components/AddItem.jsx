@@ -1,3 +1,4 @@
+const API = import.meta.env.VITE_API_URL;
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { FiUpload, FiX, FiSave } from "react-icons/fi";
@@ -61,7 +62,7 @@ export default function AddItemPage() {
         body.append("image", formData.image);
       }
 
-      const res = await axios.post("http://localhost:4000/api/items", body, {
+      const res = await axios.post(`${API}/api/items`, body, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
