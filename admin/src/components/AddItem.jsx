@@ -50,33 +50,39 @@ export default function AddItemPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const body = new FormData();
-      body.append("name", formData.name);
-      body.append("description", formData.description);
-      body.append("category", formData.category);
-      body.append("oldPrice", formData.oldPrice);
-      body.append("price", formData.price);
-      if (formData.image) {
-        body.append("image", formData.image);
-      }
+  e.preventDefault();
+  try {
+    const body = new FormData();
+    body.append("name", formData.name);
+    body.append("description", formData.description);
+    body.append("category", formData.category);
+    body.append("oldPrice", formData.oldPrice);
+    body.append("price", formData.price);
 
-      const res = await axios.post(`${API}/api/items`, body, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      console.log("Created", res.data);
-      alert("Product added!");
-
-      // Reset form
-      setFormData(initialFormState);
-      fileInputRef.current.value = "";
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed");
+    if (formData.image) {
+      body.append("image", formData.image);
     }
-  };
+
+    const res = await axios.post(`${API}/api/items`, body, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    // ✅ Proper success check
+    if (res.status === 200 || res.status === 201) {
+      alert("✅ Product added successfully!");
+    } else {
+      alert("Something went wrong");
+    }
+
+    // Reset form
+    setFormData(initialFormState);
+    fileInputRef.current.value = "";
+
+  } catch (err) {
+    console.error("ERROR:", err.response?.data || err.message);
+    alert("Upload failed");
+  }
+};
 
   const { name, description, category, oldPrice, price, preview } = formData;
 
