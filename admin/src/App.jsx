@@ -8,7 +8,7 @@ import OrdersPage from './components/Orders';
 
 function App() {
   return (
-    
+    <Router>
       <div className="min-h-screen flex flex-col">
         <AdminNavbar />
         <main className="flex-grow bg-slate-50">
@@ -28,7 +28,7 @@ function App() {
           </div>
         </footer>
       </div>
-    
+    </Router>
   );
 }
 
