@@ -28,7 +28,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      process.env.FRONTEND_URL
+      "https://bazaar-basket.vercel.app",
+      "https://bazaar-basket-admin.vercel.app" // ✅ ADD THIS
     ],
     credentials: true,
   })
