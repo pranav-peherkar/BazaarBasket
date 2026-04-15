@@ -30,7 +30,7 @@ const AdminNavbar = () => {
               Add Products
             </NavLink>
             
-            <NavLink to="/admin/listitems" className={styles.navLink}>
+            <NavLink to="/admin/listItems" className={styles.navLink}>
               <FiPackage className="mr-2" />
               List Items
             </NavLink>
@@ -63,7 +63,7 @@ const AdminNavbar = () => {
           </NavLink>
           
           <NavLink 
-            to="/admin/listitems" 
+            to="/admin/listItems" 
             onClick={closeMobileMenu}
             className={styles.mobileNavLink}
           >
