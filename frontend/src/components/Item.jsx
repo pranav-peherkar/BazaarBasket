@@ -8,6 +8,7 @@ import { itemsPageStyles } from '../assets/dummyStyles';
 
 // Backend base URL
 const API = import.meta.env.VITE_API_URL;
+console.log("API URL:", API);
 
 const ProductCard = ({ item }) => {
   const { addToCart, removeFromCart, updateQuantity, cart } = useCart();
