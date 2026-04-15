@@ -13,7 +13,7 @@ function App() {
         <main className="flex-grow bg-slate-50">
           <Routes>
             <Route path="/admin/add-item" element={<AddItemPage />} />
-            <Route path="/admin/list-items" element={<ListItemsPage />} />
+            <Route path="/admin/listitems" element={<ListItemsPage />} />
             <Route path="/admin/orders" element={<OrdersPage />} />
             {/* Redirect to add-item as default */}
             <Route path="*" element={<AddItemPage />} />
