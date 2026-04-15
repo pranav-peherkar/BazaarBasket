@@ -5,6 +5,8 @@ import { FiCheck, FiX, FiTruck, FiPackage, FiCreditCard, FiUser, FiMapPin, FiPho
 import { ordersPageStyles as styles } from '../assets/adminStyles';
 import { BsCurrencyRupee } from "react-icons/bs";
 
+const API = import.meta.env.VITE_API_URL;
+
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -36,7 +38,7 @@ const OrdersPage = () => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(order =>
-        order.id.toLowerCase().includes(term) ||
+        (order.orderId || '').toLowerCase().includes(term) ||
         order.customer.name.toLowerCase().includes(term) ||
         order.customer.phone.includes(term) ||
         (order.customer.email && order.customer.email.toLowerCase().includes(term)))
