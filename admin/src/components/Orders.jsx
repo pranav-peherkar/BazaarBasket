@@ -186,7 +186,7 @@ const OrdersPage = () => {
                     </td>
                   </tr>
                 ) : (
-                  filteredOrders.map(order => (
+                  filteredOrders?.map(order => (
                     <tr key={order._id} className={styles.tableRowHover}>
                       <td className={`${styles.tableDataCell} ${styles.orderId}`}>
                         {order.orderId}
@@ -199,10 +199,10 @@ const OrdersPage = () => {
                         {order.date}
                       </td>
                       <td className={`${styles.tableDataCell} text-sm text-gray-500`}>
-                        {order.items.length} items
+                        {order.items?.length || 0} items
                       </td>
                       <td className={`${styles.tableDataCell} font-medium`}>
-                        ₹{order.total.toFixed(2)}
+                        ₹{Number(order.total || 0).toFixed(2)}
                       </td>
                       <td className={styles.tableDataCell}>
                         <span className={styles.statusBadge(order.status)}>
@@ -344,7 +344,7 @@ const OrdersPage = () => {
                       Order Summary
                     </h3>
                     <div className={styles.modalOrderSummary}>
-                      {selectedOrder.items.map((item, index) => (
+                      {selectedOrder.items?.map((item, index) => (
                         <div
                           key={item._id || index}
                           className={styles.modalOrderItem(index, selectedOrder.items.length)}
@@ -360,10 +360,10 @@ const OrdersPage = () => {
                           )}
                           <div className="flex-grow">
                             <div className="font-medium">{item.name}</div>
-                            <div className="text-gray-600">₹{item.price.toFixed(2)} × {item.quantity}</div>
+                            <div className="text-gray-600">₹{Number(item.price || 0).toFixed(2)} × {item.quantity}</div>
                           </div>
                           <div className="font-medium">
-                            ₹{(item.price * item.quantity).toFixed(2)}
+                            ₹{Number((item.price || 0) * (item.quantity || 0)).toFixed(2)}
                           </div>
                         </div>
                       ))}
@@ -372,7 +372,7 @@ const OrdersPage = () => {
                       <div className={styles.modalOrderTotalSection}>
                         <div className={styles.modalOrderTotalRow}>
                           <span className="text-gray-600">Subtotal</span>
-                          <span className="font-medium">₹{selectedOrder.total.toFixed(2)}</span>
+                          <span className="font-medium">₹{Number(selectedOrder.total || 0).toFixed(2)}</span>
                         </div>
                         <div className={styles.modalOrderTotalRow}>
                           <span className="text-gray-600">Shipping</span>
@@ -380,12 +380,12 @@ const OrdersPage = () => {
                         </div>
                         <div className={styles.modalOrderTotalRow}>
                           <span className="text-gray-600">Tax (5%)</span>
-                          <span className="font-medium">₹{(selectedOrder.total * 0.05).toFixed(2)}</span>
+                          <span className="font-medium">₹{Number((selectedOrder.total || 0) * 0.05).toFixed(2)}</span>
                         </div>
                         <div className={styles.modalOrderTotalRowLast}>
                           <span className="text-lg font-bold">Total</span>
                           <span className="text-lg font-bold text-emerald-700">
-                            ₹{(selectedOrder.total * 1.05).toFixed(2)}
+                            ₹{Number((selectedOrder.total || 0) * 1.05).toFixed(2)}
                           </span>
                         </div>
                       </div>

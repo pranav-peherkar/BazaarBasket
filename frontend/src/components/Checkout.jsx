@@ -6,7 +6,7 @@ import { useCart } from '../CartContext';
 import { checkoutStyles } from '../assets/dummyStyles';
 import axios from 'axios';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const CheckoutPage = () => {
   const { cart, getCartTotal, clearCart } = useCart();

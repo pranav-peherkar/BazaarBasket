@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 import {
   FaArrowLeft,
   FaUser,

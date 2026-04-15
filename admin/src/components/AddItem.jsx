@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { FiUpload, FiX, FiSave } from "react-icons/fi";

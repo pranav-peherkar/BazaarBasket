@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const API = import.meta.env.VITE_API_URL;
+
 import { Link, useNavigate } from 'react-router-dom';
 import {
   FaUser,
@@ -12,6 +12,8 @@ import {
   FaEnvelope,
 } from 'react-icons/fa';
 import { signupStyles } from '../assets/dummyStyles';
+
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const Signup = () => {
   const navigate = useNavigate();

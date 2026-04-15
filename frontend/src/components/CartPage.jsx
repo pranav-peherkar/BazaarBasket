@@ -1,7 +1,7 @@
 // src/pages/Cart.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 import { FiArrowLeft, FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
 import { useCart } from '../CartContext';
 import { cartStyles } from '../assets/dummyStyles';

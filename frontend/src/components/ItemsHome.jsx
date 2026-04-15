@@ -8,7 +8,7 @@ import { itemsHomeStyles } from "../assets/dummyStyles.js";
 
 import axios from 'axios'
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const ItemsHome = () => {
   const [products, setProducts] = useState([]);

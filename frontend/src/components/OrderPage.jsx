@@ -5,7 +5,7 @@ import {
 } from 'react-icons/fi';
 import { ordersPageStyles } from "../assets/dummyStyles.js";
 import axios from 'axios';
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 const UserOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -121,7 +121,7 @@ const UserOrdersPage = () => {
                     </td>
                   </tr>
                 ) : (
-                  filteredOrders.map(order => (
+                  filteredOrders?.map(order => (
                     <tr key={order._id} className={ordersPageStyles.tableRow}>
                       <td className={`${ordersPageStyles.tableCell} font-medium text-emerald-200`}>
                         {order.orderId}
@@ -131,12 +131,12 @@ const UserOrdersPage = () => {
                       </td>
                       <td className={ordersPageStyles.tableCell}>
                         <div className="text-emerald-100">
-                          {order.items.length} items
+                          {order.items?.length || 0} items
                         </div>
                       
                       </td>
                       <td className={`${ordersPageStyles.tableCell} font-medium`}>
-                        ₹{order.total.toFixed(2)}
+                        ₹{Number(order.total || 0).toFixed(2)}
                       </td>
                       <td className={ordersPageStyles.tableCell}>
                         <span className={`${ordersPageStyles.statusBadge} ${order.status === 'Delivered' ? 'bg-emerald-500/20 text-emerald-200' :
@@ -238,7 +238,7 @@ const UserOrdersPage = () => {
                       Order Summary
                     </h3>
                     <div className="border border-emerald-700 rounded-xl overflow-hidden">
-                      {selectedOrder.items.map((item, index) => (
+                      {selectedOrder.items?.map((item, index) => (
                         <div
                           key={item._id || index}
                           className={`flex items-center p-4 bg-emerald-900/30 ${index !== selectedOrder.items.length - 1 ? 'border-b border-emerald-700' : ''}`}
@@ -256,10 +256,10 @@ const UserOrdersPage = () => {
                           )}
                           <div className="flex-grow">
                             <div className="font-medium text-emerald-100">{item.name}</div>
-                            <div className="text-emerald-400">₹{item.price.toFixed(2)} × {item.quantity}</div>
+                            <div className="text-emerald-400">₹{Number(item.price || 0).toFixed(2)} × {item.quantity}</div>
                           </div>
                           <div className="font-medium text-emerald-100">
-                            ₹{(item.price * item.quantity).toFixed(2)}
+                            ₹{Number((item.price || 0) * (item.quantity || 0)).toFixed(2)}
                           </div>
                         </div>
                       ))}
@@ -268,7 +268,7 @@ const UserOrdersPage = () => {
                       <div className="p-4 bg-emerald-800/50">
                         <div className="flex justify-between py-2">
                           <span className="text-emerald-300">Subtotal</span>
-                          <span className="font-medium text-emerald-100">₹{selectedOrder.total.toFixed(2)}</span>
+                          <span className="font-medium text-emerald-100">₹{Number(selectedOrder.total || 0).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between py-2">
                           <span className="text-emerald-300">Shipping</span>
@@ -276,12 +276,12 @@ const UserOrdersPage = () => {
                         </div>
                         <div className="flex justify-between py-2">
                           <span className="text-emerald-300">Tax</span>
-                          <span className="font-medium text-emerald-100">₹{(selectedOrder.total * 0.05).toFixed(2)}</span>
+                          <span className="font-medium text-emerald-100">₹{Number((selectedOrder.total || 0) * 0.05).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between pt-4 mt-2 border-t border-emerald-700">
                           <span className="text-lg font-bold text-emerald-100">Total</span>
                           <span className="text-lg font-bold text-emerald-300">
-                            ₹{(selectedOrder.total * 1.05).toFixed(2)}
+                            ₹{Number((selectedOrder.total || 0) * 1.05).toFixed(2)}
                           </span>
                         </div>
                       </div>

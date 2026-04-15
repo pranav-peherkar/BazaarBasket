@@ -7,7 +7,7 @@ import { groceryData } from '../assets/dummyDataItem';
 import { itemsPageStyles } from '../assets/dummyStyles';
 
 // Backend base URL
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 console.log("API URL:", API);
 
 const ProductCard = ({ item }) => {
