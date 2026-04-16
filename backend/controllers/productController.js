@@ -13,8 +13,7 @@ export const getProducts = async (req, res, next) => {
 // POST create a new product
 export const createProduct = async (req, res, next) => {
     try {
-        const filename = req.file?.filename ?? null;
-        const imageUrl = filename ? `/uploads/${filename}` : null;
+        const imageUrl = req.file?.path || null;
         const { name, description, category, oldPrice, price } = req.body;
 
         const product = await Product.create({

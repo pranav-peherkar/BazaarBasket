@@ -11,10 +11,17 @@ import {
 const itemrouter = express.Router();
 
 // Multer setup for file uploads
-const storage = multer.diskStorage({
-    destination: (_req, _file, cb) => cb(null, 'uploads/'),
-    filename: (_req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+import cloudinary from '../config/cloudinary.js';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'products',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+    },
 });
+
 const upload = multer({ storage });
 
 // GET all products
