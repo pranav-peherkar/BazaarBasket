@@ -12,9 +12,6 @@ import {
 
 const itemrouter = express.Router();
 
-// Multer setup for file uploads
-import cloudinary from '../config/cloudinary.js';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 const storage = new CloudinaryStorage({
     cloudinary,
