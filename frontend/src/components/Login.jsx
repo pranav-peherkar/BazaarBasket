@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
+
 import {
   FaArrowLeft,
   FaUser,
@@ -9,53 +10,45 @@ import {
   FaEyeSlash,
   FaCheck,
 } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
 import { loginStyles } from "../assets/dummyStyles";
-import Logout from "./Logout";
 
 const Login = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-  Boolean(localStorage.getItem("token"))
-);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    remember: false,  
+    remember: false,
   });
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
+  // ✅ FIXED: Only ONE clean useEffect
   useEffect(() => {
-    const handler = () => {
-      setIsAuthenticated(Boolean(localStorage.getItem("token")));
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const loggedIn = Boolean(token);
+
+      setIsAuthenticated(loggedIn);
+
+      if (loggedIn) {
+        navigate("/");
+      }
     };
-    window.addEventListener("authStateChanged", handler);
-    return () => window.removeEventListener("authStateChanged", handler);
-  }, []);
 
-  useEffect(() => {
-  const loggedIn = Boolean(localStorage.getItem("token"));
+    checkAuth();
 
-  setIsAuthenticated(loggedIn);
-
-  if (loggedIn) {
-    navigate("/");
-  }
-
-  const handler = () => {
-    const updated = Boolean(localStorage.getItem("token"));
-    setIsAuthenticated(updated);
-  };
-
-  window.addEventListener("authStateChanged", handler);
-
-  return () => window.removeEventListener("authStateChanged", handler);
-}, []);
+    window.addEventListener("authStateChanged", checkAuth);
+    return () => window.removeEventListener("authStateChanged", checkAuth);
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -65,6 +58,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
     if (!formData.remember) {
       setError('You must agree to "Remember me" before signing in.');
       return;
@@ -77,29 +71,31 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       );
 
       if (response.data.success) {
-        console.log(response.data);
         const { token, user } = response.data;
-        // Persist token & user
+
+        // ✅ Save token
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(user));
 
         setShowToast(true);
+
+        // Notify app
         window.dispatchEvent(new Event("authStateChanged"));
 
-        // After toast, redirect home
+        // Redirect
         setTimeout(() => {
           navigate("/");
         }, 1000);
       } else {
-        // API responded with success: false
         setError(response.data.message || "Login failed");
       }
     } catch (err) {
-      // Network or server error
       if (err.response && err.response.data) {
         setError(err.response.data.message || "Login error");
       } else {
@@ -162,7 +158,6 @@ const Login = () => {
               type="button"
               onClick={() => setShowPassword((v) => !v)}
               className={loginStyles.toggleButton}
-              aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -180,6 +175,7 @@ const Login = () => {
               />
               Remember me
             </label>
+
             <Link to="#" className={loginStyles.forgotLink}>
               Forgot?
             </Link>
