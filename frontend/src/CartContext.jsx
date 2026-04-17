@@ -173,7 +173,6 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 
-
 export const useCart = () => {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error('useCart must be inside CartProvider');
