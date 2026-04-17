@@ -245,7 +245,7 @@ const UserOrdersPage = () => {
                         >
                           {item.imageUrl ? (
                             <img
-                              src={`${API}${item.imageUrl}`}
+                              src={item.imageUrl}
                               alt={item.name}
                               className="w-16 h-16 object-cover rounded-lg mr-4"
                             />

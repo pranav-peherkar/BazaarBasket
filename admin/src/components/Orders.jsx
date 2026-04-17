@@ -353,7 +353,7 @@ const OrdersPage = () => {
                         >
                           {item.imageUrl ? (
                             <img
-                              src={`${API}${item.imageUrl}`}
+                              src={item.imageUrl}
                               alt={item.name}
                               className={styles.modalOrderImage}
                             />

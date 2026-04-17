@@ -14,7 +14,7 @@ const getAuthHeader = () => {
 
   // Always send it explicitly, even if withCredentials is true
   return token
-    ? { headers: { Authorization: `Bearer ${token}` } }
+     ? { headers: { token: token } }
     : {};
 };
 

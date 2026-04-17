@@ -23,7 +23,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ✅ Better CORS (SAFE + flexible)
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://bazaar-basket.vercel.app",
+      "https://bazaar-basket-admin.vercel.app",
+      "http://localhost:5173"
+    ],
+    credentials: true,
+  })
+);
 
 // Middleware
 app.use(express.json());

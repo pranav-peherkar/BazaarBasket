@@ -294,7 +294,7 @@ const CheckoutPage = () => {
                     <div className={checkoutStyles.cartImage}>
                       {item.imageUrl ? (
                         <img
-                          src={`${API}${item.imageUrl}`}
+                          src={item.imageUrl}
                           alt={item.name}
                           className="w-full h-full object-cover rounded"
                           onError={e => {
