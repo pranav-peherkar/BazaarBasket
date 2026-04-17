@@ -28,6 +28,7 @@ app.use(
     origin: [
       "https://bazaar-basket.vercel.app",
       "https://bazaar-basket-admin.vercel.app",
+      "https://bazaar-basket-pranavpeherkar.vercel.app",
       "http://localhost:5173"
     ],
     credentials: true,
