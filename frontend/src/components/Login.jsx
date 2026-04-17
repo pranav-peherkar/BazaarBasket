@@ -35,10 +35,24 @@ const Login = () => {
     return () => window.removeEventListener("authStateChanged", handler);
   }, []);
 
-  if (isAuthenticated) {
-  navigate("/");
-  return null;
-}
+  useEffect(() => {
+  const loggedIn = Boolean(localStorage.getItem("token"));
+
+  setIsAuthenticated(loggedIn);
+
+  if (loggedIn) {
+    navigate("/");
+  }
+
+  const handler = () => {
+    const updated = Boolean(localStorage.getItem("token"));
+    setIsAuthenticated(updated);
+  };
+
+  window.addEventListener("authStateChanged", handler);
+
+  return () => window.removeEventListener("authStateChanged", handler);
+}, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
