@@ -45,8 +45,14 @@ export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
     fetchCart();
-  }, []);
+  } else {
+    setLoading(false);
+  }
+}, []);
 
   const fetchCart = async () => {
     try {
@@ -86,6 +92,24 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = async (productId, quantity = 1) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    return;
+  }
+
+  try {
+    await axios.post(
+      `${API}/api/cart`,
+      { productId, quantity },
+      getAuthHeader()
+    );
+    await refreshCart();
+  } catch (err) {
+    console.error('Error adding to cart:', err);
+  }
+};
     try {
       await axios.post(
         `${API}/api/cart`,
@@ -148,7 +172,7 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
-};
+
 
 export const useCart = () => {
   const ctx = useContext(CartContext);
