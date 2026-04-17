@@ -11,9 +11,31 @@ export const getProducts = async (req, res, next) => {
 };
 
 // POST create a new product
+import cloudinary from '../config/cloudinary.js';
+
 export const createProduct = async (req, res, next) => {
     try {
-        const imageUrl = req.file?.path || null;
+        let imageUrl = null;
+
+        // If image exists → upload to Cloudinary
+        if (req.file) {
+            const uploadToCloudinary = () => {
+                return new Promise((resolve, reject) => {
+                    const stream = cloudinary.uploader.upload_stream(
+                        { folder: "products" },
+                        (error, result) => {
+                            if (error) reject(error);
+                            else resolve(result);
+                        }
+                    );
+                    stream.end(req.file.buffer);
+                });
+            };
+
+            const result = await uploadToCloudinary();
+            imageUrl = result.secure_url;
+        }
+
         const { name, description, category, oldPrice, price } = req.body;
 
         const product = await Product.create({
@@ -26,6 +48,7 @@ export const createProduct = async (req, res, next) => {
         });
 
         res.status(201).json(product);
+
     } catch (err) {
         next(err);
     }

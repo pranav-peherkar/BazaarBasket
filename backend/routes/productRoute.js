@@ -3,8 +3,10 @@
 import express from 'express';
 import multer from 'multer';
 import cloudinary from '../config/cloudinary.js';
-import pkg from 'multer-storage-cloudinary';
-const { CloudinaryStorage } = pkg;
+import multer from 'multer';
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 import {
     getProducts,
     createProduct,
