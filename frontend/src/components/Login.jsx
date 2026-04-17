@@ -36,8 +36,9 @@ const Login = () => {
   }, []);
 
   if (isAuthenticated) {
-    return <Logout />;
-  }
+  navigate("/");
+  return null;
+}
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
