@@ -21,7 +21,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    remember: false,
+    remember: false,  
   });
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState("");
@@ -66,6 +66,7 @@ const Login = () => {
       );
 
       if (response.data.success) {
+        console.log(response.data);
         const { token, user } = response.data;
         // Persist token & user
         localStorage.setItem("token", token);
