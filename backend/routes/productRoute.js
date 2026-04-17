@@ -3,7 +3,8 @@
 import express from 'express';
 import multer from 'multer';
 import cloudinary from '../config/cloudinary.js';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import pkg from 'multer-storage-cloudinary';
+const { CloudinaryStorage } = pkg;
 import {
     getProducts,
     createProduct,
