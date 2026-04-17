@@ -1,23 +1,23 @@
 // src/CartContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+
 const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const CartContext = createContext();
 
+// ✅ Correct header
 const getAuthHeader = () => {
-  // Pull your JWT from wherever you’ve stored it
   const token =
-    localStorage.getItem('authToken') ||
     localStorage.getItem('token') ||
     sessionStorage.getItem('token');
 
-  // Always send it explicitly, even if withCredentials is true
   return token
-     ? { headers: { token: token } }
+    ? { headers: { Authorization: `Bearer ${token}` } }
     : {};
 };
 
+// ✅ Normalize items
 const normalizeItems = (rawItems = []) => {
   return rawItems
     .map(item => {
@@ -29,8 +29,8 @@ const normalizeItems = (rawItems = []) => {
 
       return {
         ...item,
-        id, // unique line item ID
-        productId, // underlying product ID (used for addToCart)
+        id,
+        productId,
         name,
         price,
         imageUrl,
@@ -44,30 +44,29 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // ✅ Load cart only if logged in
   useEffect(() => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (token) {
-    fetchCart();
-  } else {
-    setLoading(false);
-  }
-}, []);
+    if (token) {
+      fetchCart();
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const fetchCart = async () => {
     try {
-      const { data } = await axios.get(
-        `${API}/api/cart`,
-        {
-          ...getAuthHeader(),
-          withCredentials: true,   // if you’re relying on cookies too
-        }
-      );
+      const { data } = await axios.get(`${API}/api/cart`, {
+        ...getAuthHeader(),
+        withCredentials: true,
+      });
+
       const rawItems = Array.isArray(data)
         ? data
         : Array.isArray(data.items)
-          ? data.items
-          : data.cart?.items || [];
+        ? data.items
+        : data.cart?.items || [];
 
       setCart(normalizeItems(rawItems));
     } catch (err) {
@@ -80,36 +79,28 @@ export const CartProvider = ({ children }) => {
   const refreshCart = async () => {
     try {
       const { data } = await axios.get(`${API}/api/cart`, getAuthHeader());
+
       const rawItems = Array.isArray(data)
         ? data
         : Array.isArray(data.items)
-          ? data.items
-          : data.cart?.items || [];
+        ? data.items
+        : data.cart?.items || [];
+
       setCart(normalizeItems(rawItems));
     } catch (err) {
       console.error('Error refreshing cart:', err);
     }
   };
 
+  // ✅ FIXED addToCart
   const addToCart = async (productId, quantity = 1) => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Please login first");
-    return;
-  }
+    if (!token) {
+      alert("Please login first");
+      return;
+    }
 
-  try {
-    await axios.post(
-      `${API}/api/cart`,
-      { productId, quantity },
-      getAuthHeader()
-    );
-    await refreshCart();
-  } catch (err) {
-    console.error('Error adding to cart:', err);
-  }
-};
     try {
       await axios.post(
         `${API}/api/cart`,
@@ -153,7 +144,9 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const getCartTotal = () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const getCartTotal = () =>
+    cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -172,7 +165,9 @@ export const CartProvider = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
+};
 
+// ✅ Hook
 export const useCart = () => {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error('useCart must be inside CartProvider');
