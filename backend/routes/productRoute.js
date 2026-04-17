@@ -4,7 +4,7 @@ import express from 'express';
 import multer from 'multer';
 import cloudinary from '../config/cloudinary.js';
 import pkg from 'multer-storage-cloudinary';
-const CloudinaryStorage = pkg.default || pkg;
+const { CloudinaryStorage } = pkg;
 import {
     getProducts,
     createProduct,
