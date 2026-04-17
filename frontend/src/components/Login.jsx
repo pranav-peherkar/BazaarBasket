@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     const handler = () => {
-      setIsAuthenticated(Boolean(localStorage.getItem("authToken")));
+      setIsAuthenticated(Boolean(localStorage.getItem("token")));
     };
     window.addEventListener("authStateChanged", handler);
     return () => window.removeEventListener("authStateChanged", handler);
