@@ -15,8 +15,8 @@ import Logout from "./Logout";
 
 const Login = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    Boolean(localStorage.getItem("authToken"))
-  );
+  Boolean(localStorage.getItem("token"))
+);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -68,7 +68,7 @@ const Login = () => {
       if (response.data.success) {
         const { token, user } = response.data;
         // Persist token & user
-        localStorage.setItem("authToken", token);
+        localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(user));
 
         setShowToast(true);
