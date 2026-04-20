@@ -11,7 +11,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginStyles } from "../assets/dummyStyles";
 
 const Login = () => {
@@ -26,8 +26,9 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation(); // ✅ IMPORTANT
 
-  // ✅ FIXED: Only ONE clean useEffect
+  // ✅ FIXED AUTH CHECK
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("token");
@@ -35,7 +36,8 @@ const Login = () => {
 
       setIsAuthenticated(loggedIn);
 
-      if (loggedIn) {
+      // ✅ ONLY redirect if on login page
+      if (loggedIn && location.pathname === "/login") {
         navigate("/");
       }
     };
@@ -44,7 +46,7 @@ const Login = () => {
 
     window.addEventListener("authStateChanged", checkAuth);
     return () => window.removeEventListener("authStateChanged", checkAuth);
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -88,7 +90,7 @@ const Login = () => {
         // Notify app
         window.dispatchEvent(new Event("authStateChanged"));
 
-        // Redirect
+        // Redirect after login
         setTimeout(() => {
           navigate("/");
         }, 1000);

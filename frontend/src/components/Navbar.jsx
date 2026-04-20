@@ -29,7 +29,7 @@ export default function Navbar() {
 
   // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(
-    Boolean(localStorage.getItem('authToken'))
+    Boolean(localStorage.getItem('token'))
   );
 
   // Mobile menu ref
