@@ -61,7 +61,7 @@ export default function Navbar() {
   // Listen for auth changes
   useEffect(() => {
     const handler = () => {
-      setIsLoggedIn(Boolean(localStorage.getItem('authToken')));
+      setIsLoggedIn(Boolean(localStorage.getItem('token')));
     };
     window.addEventListener('authStateChanged', handler);
     return () => window.removeEventListener('authStateChanged', handler);
@@ -84,7 +84,7 @@ export default function Navbar() {
 
   // Logout handler
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('userData');
     window.dispatchEvent(new Event('authStateChanged'));
     navigate('/login');

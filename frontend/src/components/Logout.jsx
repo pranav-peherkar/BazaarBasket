@@ -4,7 +4,7 @@ import { FaSignOutAlt } from 'react-icons/fa';
 const Logout = () => {
     const handleLogout = () => {
         // Clear stored auth data
-        localStorage.removeItem('authToken');
+        localStorage.removeItem('T=token');
         localStorage.removeItem('userData');
         // Notify the rest of the app
         window.dispatchEvent(new Event('authStateChanged'));

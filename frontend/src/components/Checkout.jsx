@@ -69,7 +69,7 @@ const CheckoutPage = () => {
     };
 
     try {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('token');
       const res = await axios.post(
         `${API}/api/orders`,
         order,

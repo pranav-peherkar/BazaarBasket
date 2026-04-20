@@ -14,7 +14,7 @@ const VerifyPaymentPage = () => {
         const params = new URLSearchParams(search);
         const session_id = params.get('session_id');
         const payment_status = params.get('payment_status');
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('token');
 
         // If user cancelled on Stripe side, send them back to checkout
         if (payment_status === 'cancel') {
