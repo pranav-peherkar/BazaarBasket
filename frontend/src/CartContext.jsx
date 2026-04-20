@@ -6,14 +6,16 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 const CartContext = createContext();
 
-// ✅ Correct header
+// ✅ Correct Auth Header (JWT)
 const getAuthHeader = () => {
-  const token =
-    localStorage.getItem('token') ||
-    sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   return token
-    ? { headers: { Authorization: `Bearer ${token}` } }
+    ? {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     : {};
 };
 
@@ -55,12 +57,10 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
+  // ✅ Fetch Cart
   const fetchCart = async () => {
     try {
-      const { data } = await axios.get(`${API}/api/cart`, {
-        ...getAuthHeader(),
-        withCredentials: true,
-      });
+      const { data } = await axios.get(`${API}/api/cart`, getAuthHeader());
 
       const rawItems = Array.isArray(data)
         ? data
@@ -76,6 +76,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // ✅ Refresh Cart
   const refreshCart = async () => {
     try {
       const { data } = await axios.get(`${API}/api/cart`, getAuthHeader());
@@ -92,7 +93,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // ✅ FIXED addToCart
+  // ✅ Add to Cart
   const addToCart = async (productId, quantity = 1) => {
     const token = localStorage.getItem("token");
 
@@ -107,12 +108,14 @@ export const CartProvider = ({ children }) => {
         { productId, quantity },
         getAuthHeader()
       );
+
       await refreshCart();
     } catch (err) {
       console.error('Error adding to cart:', err);
     }
   };
 
+  // ✅ Update Quantity
   const updateQuantity = async (lineId, quantity) => {
     try {
       await axios.put(
@@ -120,12 +123,14 @@ export const CartProvider = ({ children }) => {
         { quantity },
         getAuthHeader()
       );
+
       await refreshCart();
     } catch (err) {
       console.error('Error updating quantity:', err);
     }
   };
 
+  // ✅ Remove Item
   const removeFromCart = async (lineId) => {
     try {
       await axios.delete(`${API}/api/cart/${lineId}`, getAuthHeader());
@@ -135,6 +140,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // ✅ Clear Cart
   const clearCart = async () => {
     try {
       await axios.post(`${API}/api/cart/clear`, {}, getAuthHeader());
